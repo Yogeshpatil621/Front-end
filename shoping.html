@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Concept</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:700">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+<body>
+<div id="app" v-cloak="v-cloak">
+    <div class="board">
+      <nav>
+        <h1>{{title}}</h1><i class="fa fa-shopping-cart" @click="show(neaten_slick)" aria-hidden="true"></i>
+      </nav>
+      <div class="items">
+        <div class="item" v-for="(item,index) in items">
+          <div class="img" :style="{backgroundImage:'url('+ item.url +')'}"></div>
+          <p class="name">{{item.name}}<span class="price">${{item.price}}</span></p><i class="minus fa fa-minus-square" @click="minus(index)" aria-hidden="true"></i><span>{{item.bought}}</span><i class="add fa fa-plus-square" @click="plus(index)" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+    <div class="checkout"><i class="cross fa fa-times" @click="close" aria-hidden="true"></i>
+      <div class="boxes">
+        <div class="cart">
+          <h4>CART</h4>
+          <ul class="stuff">
+            <li v-for="(item,index) in items" v-if="item.show">
+              <div class="img" :style="{backgroundImage:'url('+ item.url +')'}"></div>
+              <div class="detail">
+                <p class="name">{{item.name}}</p>
+                <p class="price">${{item.price}}</p><i class="add fa fa-plus-square" @click="plus(index)" aria-hidden="true"></i><span>{{item.bought}}</span><i class="minus fa fa-minus-square" @click="minus(index)" aria-hidden="true"></i>
+              </div>
+            </li>
+          </ul>
+          <p class="shipping">+ Shipping ${{shipping}}</p>
+          <p class="total">Total ${{total}}</p>
+        </div>
+        <div class="details">
+          <div class="card">
+            <h3>Credit Card</h3>
+            <p class="card-num">{{card.card_number}}</p>
+            <div><span class="expires">{{card.expires}}</span><span class="ccv">{{card.ccv}}</span></div>
+            <p class="card-holder">{{card.card_holder}}</p>
+          </div>
+          <form class="detail">
+            <div class="item">
+              <p>Card number</p>
+              <input type="number" v-model="card.card_number"/>
+            </div>
+            <div class="item">
+              <p>Card holder</p>
+              <input type="text" v-model="card.card_holder"/>
+            </div>
+            <div class="item">
+              <p>Expires</p>
+              <input type="month" v-model="card.expires"/>
+            </div>
+            <div class="item">
+              <p>ccv</p>
+              <input type="number" v-model="card.ccv"/>
+            </div>
+            <input class="submit" type="submit" value="Checkout!"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+<style>
+    @charset "UTF-8";
+.checkout .slick-initialized .cart .total, .checkout .cross, .slick-initialized .item .add, .slick-initialized .item .minus, .slick-initialized .item span, .slick-initialized .item p {
+  font-size: 1.4em;
+}
+
+#app .board nav i {
+  font-size: 2em;
+}
+
+.checkout .slick-initialized .details form .submit, .checkout .slick-initialized .cart ul li .detail {
+  font-size: 1.1em;
+}
+
+.checkout .slick-initialized .cart ul li .img, .slick-initialized .item .img {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.checkout .slick-initialized .cart ul li .img, .slick-initialized .item .img {
+  -webkit-filter: drop-shadow(5px 5px 3px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(5px 5px 3px rgba(0, 0, 0, 0.5));
+}
+
+[cloak] {
+  display: none;
+}
+
+* {
+  position: relative;
+  box-sizing: border-box;
+  font-family: Nunito, 微軟正黑體;
+  color: #3d1f0e;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  position: absolute;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10%);
+  border-radius: 1em;
+  overflow: hidden;
+  background-image: url(https://s6.postimg.cc/yrm1jn9q9/chopping-board-1917996_1920.jpg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+#app .board {
+  width: 100%;
+  height: 100%;
+  background-image: url(https://s6.postimg.cc/yrm1jn9q9/chopping-board-1917996_1920.jpg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+#app .board nav {
+  margin: 0em 2em;
+  padding-top: 1em;
+  display: flex;
+}
+#app .board nav h1 {
+  margin: 0;
+  color: #fff;
+  font-family: Verdana;
+}
+#app .board nav i {
+  height: 7vh;
+  cursor: pointer;
+  position: absolute;
+  left: 100%;
+  transform: translateX(-100%);
+  color: #fff;
+}
+#app .board nav i:hover {
+  color: #ff3300;
+}
+
+.slick-initialized {
+  visibility: visible;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  height: 70vh;
+  visibility: hidden;
+}
+
+.slick-initialized {
+  visibility: visible;
+}
+.slick-initialized .item .img {
+  height: 50vh;
+}
+.slick-initialized .item p {
+  margin: 0;
+  margin-bottom: 0.3em;
+  color: #3d1f0e;
+}
+.slick-initialized .item p span {
+  font-size: 1em;
+  padding: 0;
+  padding-left: 0.3em;
+  color: #ff3300;
+}
+.slick-initialized .item span {
+  padding: 0 0.5em;
+  color: #3d1f0e;
+}
+.slick-initialized .item .add, .slick-initialized .item .minus {
+  cursor: pointer;
+}
+.slick-initialized .item .add:hover, .slick-initialized .item .minus:hover {
+  color: #ff3300;
+}
+
+.checkout {
+  -webkit-animation: fadeIn 1s 1;
+  -moz-animation: fadeIn 1s 1;
+  -ms-animation: fadeIn 1s 1;
+  -o-animation: fadeIn 1s 1;
+  animation: fadeIn 1s 1;
+  filter: blur(0em);
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  left: 50%;
+  top: 48%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+  border-radius: 1em;
+}
+.checkout .cross {
+  position: absolute;
+  left: 101%;
+  top: -4%;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+.checkout .boxes {
+  filter: blur(0em);
+  visibility: hidden;
+}
+.checkout .slick-initialized {
+  visibility: visible;
+}
+.checkout .slick-initialized .cart {
+  padding: 1em;
+}
+.checkout .slick-initialized .cart h4 {
+  margin: 0;
+}
+.checkout .slick-initialized .cart p {
+  text-align: right;
+  margin: 0;
+}
+.checkout .slick-initialized .cart ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  height: 40vh;
+  padding: 0.7em;
+  overflow-y: auto;
+  box-shadow: inset 0px 0px 10px 0px rgba(130, 119, 104, 0.7);
+}
+.checkout .slick-initialized .cart ul li {
+  box-shadow: 1px 1px 10px 0px #948c94;
+  border-radius: 0.1em;
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  padding: 0.3em;
+}
+.checkout .slick-initialized .cart ul li .detail {
+  width: 80%;
+  text-align: right;
+}
+.checkout .slick-initialized .cart ul li .detail p {
+  margin: 0;
+}
+.checkout .slick-initialized .cart ul li .img {
+  width: 20%;
+}
+.checkout .slick-initialized .cart .shipping {
+  border-bottom: solid 2px #3d1f0e;
+  padding-bottom: 0.1em;
+  width: 40%;
+  margin-left: auto;
+}
+.checkout .slick-initialized .cart .total {
+  color: #ff3300;
+  font-weight: 700;
+}
+.checkout .slick-initialized .details {
+  padding: 1em;
+}
+.checkout .slick-initialized .details .card {
+  width: 45%;
+  height: 30vh;
+  margin: auto;
+  border-radius: 1em;
+  padding: 1em;
+  background-image: url(https://s6.postimg.cc/gt5mb0ttt/background-1932466_1920.jpg);
+  background-size: 100% 100%;
+  box-shadow: 0px 2px 3px rgba(107, 75, 31, 0.7);
+  white-space: nowrap;
+}
+.checkout .slick-initialized .details .card h3 {
+  margin: 0;
+  color: #fff;
+  text-align: right;
+}
+.checkout .slick-initialized .details .card .card-num {
+  color: #fff;
+  margin-bottom: 5%;
+  font-size: 1.4em;
+}
+.checkout .slick-initialized .details .card div .expires {
+  color: #fff;
+}
+.checkout .slick-initialized .details .card div .ccv {
+  color: #fff;
+  position: absolute;
+  left: 100%;
+  transform: translateX(-100%);
+}
+.checkout .slick-initialized .details .card .card-holder {
+  color: #fff;
+  margin-top: -0.01em;
+}
+.checkout .slick-initialized .details form {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
+.checkout .slick-initialized .details form .item {
+  width: 45%;
+  margin: 0.2em auto;
+}
+.checkout .slick-initialized .details form .item input {
+  width: 90%;
+  margin-right: 0.5em;
+}
+.checkout .slick-initialized .details form .item p {
+  margin: 0;
+}
+.checkout .slick-initialized .details form .submit {
+  width: 35%;
+  padding: 0.2em;
+  border: solid 0px;
+  border-radius: 1em;
+  margin: auto;
+  color: #3d1f0e;
+  background-color: #f2a841;
+  margin-top: 1em;
+  font-weight: 700;
+}
+.checkout .slick-initialized .details form .submit:hover {
+  color: #ff3300;
+}
+
+input {
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 0px;
+  border-bottom: solid 2px;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 55%;
+  }
+  100% {
+    opacity: 1;
+    top: 48%;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 55%;
+  }
+  100% {
+    opacity: 1;
+    top: 48%;
+  }
+}
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 55%;
+  }
+  100% {
+    opacity: 1;
+    top: 48%;
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 55%;
+  }
+  100% {
+    opacity: 1;
+    top: 48%;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 55%;
+  }
+  100% {
+    opacity: 1;
+    top: 48%;
+  }
+}
+@media only screen and (max-width: 479px) {
+  .slick-initialized .item p, .slick-initialized .item span, .slick-initialized .item .add, .slick-initialized .item .minus, .checkout .cross, .checkout .slick-initialized .cart .total {
+    font-size: 1.3em;
+  }
+
+  #app {
+    width: 100vw;
+    height: 91vh;
+    left: 0;
+    transform: translateX(0%) translateY(0%);
+    border-radius: 0;
+  }
+  #app .board {
+    background-size: 110% 110%;
+    background-position: 55% 55%;
+  }
+  #app .board .items {
+    height: 65vh;
+  }
+  #app .board .items .item {
+    padding-top: 1.3em;
+  }
+  #app .board .items .item .img {
+    width: 77%;
+    height: 46vh;
+    margin: auto;
+  }
+  #app .board nav {
+    margin: 0em 3.2em;
+    padding-top: 2.3em;
+  }
+  #app .checkout {
+    min-height: 400px;
+  }
+  #app .checkout .boxes .details .card {
+    width: 80%;
+    height: 22vh;
+    font-size: 0.8em;
+  }
+  #app .checkout .boxes .details form .item {
+    width: 75%;
+  }
+  #app .checkout .boxes .details form .item input {
+    width: 100%;
+    margin: 0;
+  }
+  #app .checkout .boxes .details form .submit {
+    width: 65%;
+    padding: 0.3em;
+  }
+  #app .checkout .boxes .cart .shipping {
+    width: 50%;
+  }
+  #app .checkout .boxes .cart ul li .img {
+    width: 30%;
+  }
+}
+</style>
+<script>
+    var item_data=[
+  {url:"https://s6.postimg.cc/w2i224phd/almonds_1740176_1920.png",
+   name:"堅果",
+   price: 20,
+   bought: 0,
+   show: false
+ },{url:"https://s6.postimg.cc/7n9u12qkh/bread_1915886_1920.png",
+   name:"麵包",
+   price: 30,
+    bought: 0,
+    show: false
+ },
+  {url:"https://s6.postimg.cc/8mwglse81/federal-carrots-1083235_1920.png",
+   name:"紅蘿蔔",
+   price: 30,
+   bought: 0,
+   show: false
+ },
+  {url:"https://s6.postimg.cc/psmsf4q2p/dish_1883501_1920.png",
+   name:"水果",
+   price: 30,
+   bought: 0,
+   show: false
+ },
+  {url:"https://s6.postimg.cc/wkd7hzf29/egg_1505021_1920.png",
+   name:"蛋",
+   price: 30,
+   bought: 0,
+   show: false
+ },
+  {url:"https://s6.postimg.cc/hfdf9gzcx/meet-1154341_1920.png",
+   name:"肉",
+   price: 30,
+   bought: 0,
+   show: false
+ }
+     ];
+
+ var app=new Vue({
+   el:"#app",
+   data:{
+     title:"SuperMarket",
+     items:item_data,
+     card:{
+       card_number:"",
+       card_holder:"",
+       expires:"",
+       ccv:""
+          },
+     shipping: $('.stuff li').length>=0?200:0
+   },
+   methods:{
+     close: function(){      $('.board').css('filter','blur(0em)')
+       $('.fa-shopping-cart').css('display','inline');
+       $('.checkout').hide();
+     },
+     show: function(callback){
+       $('.board').css('filter','blur(0.1em)');
+       $('.fa-shopping-cart').css('display','none');
+       $('.checkout').show();
+       callback && callback();
+     },
+     minus: function(index){
+       var item=this.$data.items[index];
+     if(item.bought>1){
+       item.bought-=1;
+     }else if(item.bought==1){
+       item.bought-=1;
+       item.show=false;
+     }else{
+       item.bought==0;
+     }},
+     plus: function(index){
+       var item=this.$data.items[index];
+       item.bought+=1;
+       item.show=true;
+     },
+     neaten_slick: function(){
+      $('.slick-disabled').trigger('click');
+     }
+   }
+   ,
+   computed:{
+     total: function(){
+       var array=this.$data.items,
+           length=array.length,
+           shipping=this.$data.shipping,
+           sum=shipping;
+       for(i=0;i<length;i++){
+         sum+=
+          array[i].price*array[i].bought;
+       }
+       return sum;
+     }
+
+   }
+
+ }
+ );
+
+ $(document).ready(function(){
+   $('.items').slick({
+     dots: true,
+   infinite: true,
+   speed: 300,
+   slidesToShow: 1,
+   adaptiveHeight: true
+   });
+ $('.boxes').slick({
+         dots: true,
+         infinite: false,
+         speed: 100,
+         slidesToShow: 1,
+   });
+   $('.checkout').hide();
+ });
+</script>

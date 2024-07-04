@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Sidebar</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="menu-btn">
+        <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/menu.svg" alt="menu">
+      </div>
+
+      <div class="sidebar-items">
+        <div class="item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/home.svg">
+          <span>Home</span>
+        </div>
+        <div class="item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/shorts.svg" alt="home">
+          <span>Shorts</span>
+        </div>
+        <div class="item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/subscription.svg" alt="home">
+          <span>Subscriptions</span>
+        </div>
+        <div class="item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/library.svg" alt="home">
+          <span>Library</span>
+        </div>
+      </div>
+    </aside>
+
+    <div id="menu">
+      <div class="menu-header">
+        <div class="menu-btn">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/menu.svg" alt="menu-icon">
+        </div>
+        <a href="#">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/youtube.svg" alt="youtube-logo">
+        </a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/home.svg">
+          <span>Home</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/shorts.svg">
+          <span>Shorts</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/subscription.svg">
+          <span>Subscriptions</span>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/library.svg">
+          <span>Library</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/history.svg">
+          <span>History</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/videos.svg">
+          <span>Your Videos</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/watch-later.svg">
+          <span>Watch Later</span>
+        </div>
+        <div class="menu-item">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/liked.svg">
+          <span>Liked Videos</span>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <nav>
+        <a href="">
+          <img src="https://raw.githubusercontent.com/parthwebdev/UI-Components/7e774add0ddd88a4fb4057b01ad1f75a3edb4a03/Sidebars/01/svg/youtube.svg" alt="youtube-logo">
+        </a>
+        <p>NavBar</p>
+      </nav>
+
+      <main>
+        <h1>Feed</h1>
+      </main>
+    </section>
+    <script src="script.js" defer></script>
+  </body>
+</html>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #0f0f0f;
+  height: 100vh;
+  color: white;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 80px;
+  height: 100%;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.menu-btn:hover {
+  background-color: #272727;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 2px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: #272727;
+}
+.item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+.item span {
+  font-size: 11px;
+}
+
+#menu {
+  width: 240px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  z-index: 10;
+}
+#menu.visible {
+  transform: translateX(0);
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.menu-group {
+  padding: 16px 0;
+  border-block: 1px solid #3f3f3f;
+}
+
+.menu-item {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background-color: #272727;
+}
+.menu-item img {
+  margin-right: 24px;
+}
+
+section {
+  width: 100%;
+  height: 100%;
+}
+
+nav {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main h1 {
+  font-size: 42px;
+}
+</style>
+<script>
+    const menu = document.querySelector("#menu");
+const menuBtns = document.querySelectorAll(".menu-btn");
+
+menuBtns.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    menu.classList.toggle("visible");
+  });
+});
+
+document.addEventListener("click", function (e) {
+  if (!menu.contains(e.target) && !menuBtns[0].contains(e.target)) {
+    menu.classList.remove("visible");
+  }
+});
+</script>
